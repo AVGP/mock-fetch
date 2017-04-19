@@ -16,11 +16,13 @@
       }
 
       json() {
-        return Promise.resolve(this.expectedJson || JSON.parse(expectedResponse.text));
+        if(!this.expectedOK) throw new Error(this.statusText || 'Not OK');
+        return Promise.resolve(this.expectedJson || JSON.parse(expectedText));
       }
 
       text() {
-        return Promise.resolve(this.expectedText || JSON.stringify(expectedResponse.json));
+        if(!this.expectedOK) throw new Error(this.statusText || 'Not OK');
+        return Promise.resolve(this.expectedText || JSON.stringify(expectedJson));
       }
 
       get status() {
